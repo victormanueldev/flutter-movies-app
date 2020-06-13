@@ -35,11 +35,17 @@ class MoviesProvider {
   }
 
 
-  Uri _getUri(String page, { String numPage }) {
-    if ( numPage == null ) {
+  Uri _getUri(String page, { String numPage, String query }) {
+    if ( numPage == null && query == null ) {
       return Uri.https(_url, page, {
         'api_key'   :  _apiKey,
         'language'  : _language
+      });
+    } else if( query != null ) {
+      return Uri.https(_url, page, {
+        'api_key'   :  _apiKey,
+        'language'  : _language,
+        'query'     : query
       });
     } else {
       return Uri.https(_url, page, {
@@ -50,9 +56,9 @@ class MoviesProvider {
     }
   }
 
-  Future<List<Movie>> _getMovies(String resultParam, String page, { String numPage }) async {
+  Future<List<Movie>> _getMovies(String resultParam, String page, { String numPage, String query }) async {
     // Build whole URL with Query paramss
-    final wholeUri = _getUri(page, numPage: numPage);
+    final wholeUri = _getUri(page, numPage: numPage, query: query);
     // Make a HTTP Request
     final apiResp = await http.get(wholeUri);
     // Decode Raw HTTP Response to JSON
@@ -91,5 +97,7 @@ class MoviesProvider {
 
     return items.actors;
   }
+
+  Future<List<Movie>> searchMovies( String term ) async => await _getMovies('results', '3/search/movie', query: term);
 
 }
