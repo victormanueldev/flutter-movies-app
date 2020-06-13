@@ -34,9 +34,10 @@ class Movie {
     this.releaseDate,
   });
 
+  // Convert a JSON to Dart Map
   Movie.fromJsonToMap( Map<String, dynamic> json ){
     this.popularity = json['popularity'];
-    this.voteCount = json['vote_count'] / 1;
+    this.voteCount = json['vote_count'];
     this.video = json['video'];
     this.posterPath = json['poster_path'];
     this.id = json['id'];
@@ -46,8 +47,40 @@ class Movie {
     this.originalTitle = json['original_title'];
     this.genreIds = json['genre_ids'].cast<int>();
     this.title = json['title'];
-    this.voteAverage = json['vote_average'];
+    this.voteAverage = json['vote_average'] / 1;
     this.overview = json['overview'];
     this.releaseDate = json['release_date'];
   }
+
+    String getPosterUrl() {
+    if( posterPath == null ){
+      return 'https://comnplayscience.eu/app/images/notfound.png';
+    } else {
+      return 'https://image.tmdb.org/t/p/w500/$posterPath';
+    }
+  }
+
+  String getBackdropUrl() {
+    if( backdropPath == null ){
+      return 'https://comnplayscience.eu/app/images/notfound.png';
+    } else {
+      return 'https://image.tmdb.org/t/p/w500/$backdropPath';
+    }
+  }
+}
+
+class Movies {
+  List<Movie> items = new List();
+
+  Movies();
+
+  // Convert a JSON (Rest API) to Dart List
+  Movies.fromJsonToList( List<dynamic> jsonList ) {
+    if( jsonList == null ) return;
+    for (final item in jsonList ) {
+      final movie = new Movie.fromJsonToMap(item);
+      items.add(movie);
+    }
+  }
+
 }
