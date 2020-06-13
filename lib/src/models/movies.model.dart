@@ -2,6 +2,7 @@
 
 
 class Movie {
+  String mid;
   double popularity;
   int voteCount;
   bool video;

@@ -53,11 +53,14 @@ class MovieDetail extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 20.0),
       child: Row(
         children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10.0),
-            child: Image(
-              image: NetworkImage(movie.getPosterUrl()),
-              height: 150.0,
+          Hero(
+            tag: movie.id,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10.0),
+              child: Image(
+                image: NetworkImage(movie.getPosterUrl()),
+                height: 150.0,
+              ),
             ),
           ),
           SizedBox(width: 20.0),
@@ -135,6 +138,10 @@ class MovieDetail extends StatelessWidget {
                 image: NetworkImage(actor.getImageUrl()),
                 placeholder: AssetImage('assets/img/no-image.jpg'),
                 fit: BoxFit.cover),
+          ),
+          Text(
+            actor.name,
+            overflow: TextOverflow.ellipsis,
           )
         ],
       ),

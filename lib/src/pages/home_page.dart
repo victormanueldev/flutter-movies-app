@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_movies_app/src/providers/movies.provider.dart';
+import 'package:flutter_movies_app/src/search/search_delegate.dart';
 import 'package:flutter_movies_app/src/widgets/card_swiper.dart';
 import 'package:flutter_movies_app/src/widgets/movies_horizontal.dart';
 
@@ -16,7 +17,9 @@ class HomePage extends StatelessWidget {
           title: Text('Movies'),
           backgroundColor: Colors.indigoAccent,
           actions: <Widget>[
-            IconButton(icon: Icon(Icons.search), onPressed: () {})
+            IconButton(icon: Icon(Icons.search), onPressed: () {
+              showSearch(context: context, delegate: DataSearch() );
+            })
           ],
         ),
         body: Container(
